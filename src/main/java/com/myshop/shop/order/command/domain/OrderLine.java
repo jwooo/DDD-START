@@ -1,8 +1,6 @@
-package com.myshop.shop.order.command;
+package com.myshop.shop.order.command.domain;
 
 import lombok.Getter;
-
-import javax.sound.sampled.Port;
 
 /**
  * 주문할 상품, 상품의 가격, 구매 개수를 포함해야 한다.

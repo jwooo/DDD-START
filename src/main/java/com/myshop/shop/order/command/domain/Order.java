@@ -1,7 +1,6 @@
-package com.myshop.shop.order.command;
+package com.myshop.shop.order.command.domain;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 요구사항

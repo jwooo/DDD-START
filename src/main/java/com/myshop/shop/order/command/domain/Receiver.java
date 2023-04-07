@@ -1,4 +1,4 @@
-package com.myshop.shop.order.command;
+package com.myshop.shop.order.command.domain;
 
 import lombok.Getter;
 
