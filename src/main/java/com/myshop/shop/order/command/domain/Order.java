@@ -66,9 +66,10 @@ public class Order {
     }
 
     private void calculateTotalAmounts() {
-        this.totalAmounts = new Money(orderLines.stream()
-                .mapToInt(orderLine -> orderLine.getAmounts().getValue())
-                .sum());
+        int sum = orderLines.stream()
+                .mapToInt(ol -> ol.getPrice().getValue() * ol.getQuantity())
+                .sum();
+        this.totalAmounts = new Money(sum);
     }
 
     public void changeShipped() {
