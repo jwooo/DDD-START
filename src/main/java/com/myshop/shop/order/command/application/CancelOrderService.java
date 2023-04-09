@@ -9,7 +9,7 @@ public class CancelOrderService {
     private OrderRepository orderRepository;
 
     public void cancel(OrderNo orderNo) {
-        Order order = orderRepository.findByNumber(orderNo);
+        Order order = orderRepository.findById(orderNo);
         if (order == null) throw new RuntimeException(orderNo.getNumber());
         order.cancel();
     }
