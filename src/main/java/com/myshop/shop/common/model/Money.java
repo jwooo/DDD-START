@@ -32,7 +32,7 @@ public class Money {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj ==null || getClass() != obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) return false;
         Money money = (Money) obj;
         return value == money.value;
     }
