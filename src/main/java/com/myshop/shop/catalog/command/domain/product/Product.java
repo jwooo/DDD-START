@@ -1,11 +1,13 @@
 package com.myshop.shop.catalog.command.domain.product;
 
+import com.myshop.shop.catalog.command.domain.category.CategoryId;
 import com.myshop.shop.common.jpa.MoneyConverter;
 import com.myshop.shop.common.model.Money;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -13,6 +15,12 @@ public class Product {
 
     @EmbeddedId
     private ProductId id;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "product_category",
+        joinColumns = @JoinColumn(name = "product_id"))
+    private Set<CategoryId> categoryIds;
+
 
     private String name;
 
