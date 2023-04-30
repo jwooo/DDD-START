@@ -1,5 +1,9 @@
 package com.myshop.shop.order.command.domain;
 
+import com.myshop.shop.common.jpa.MoneyConverter;
+import com.myshop.shop.common.model.Money;
+
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -19,22 +23,51 @@ import java.util.List;
  * 출고 상태로 변경하기, 배송지 정보 변경하기, 주문 취소하기, 결제 완료하기
  *
  */
-public class Order {
-    private OrderNo number;
-    private List<OrderLine> orderLines;
-    private Orderer orderer;
-    private ShippingInfo shippingInfo;
-    private OrderState state;
-    private Money totalAmounts;
 
-    public Order(Orderer orderer,
+@Entity
+@Table(name = "purchase_order")
+@Access(AccessType.FIELD)
+public class Order {
+
+    @EmbeddedId
+    private OrderNo number;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "order_line", joinColumns = @JoinColumn(name = "order_number"))
+    @OrderColumn(name = "line_idx")
+    private List<OrderLine> orderLines;
+    @Embedded
+    private Orderer orderer;
+
+    @Column(name = "state")
+    @Enumerated(EnumType.STRING)
+    private OrderState state;
+
+    @Convert(converter = MoneyConverter.class)
+    @Column(name = "total_amounts")
+    private Money totalAmounts;
+    @Embedded
+    private ShippingInfo shippingInfo;
+
+    public Order(OrderNo number,
+                 Orderer orderer,
                  List<OrderLine> orderLines,
                  ShippingInfo shippingInfo,
                  OrderState state) {
+        setNumber(number);
         setOrderer(orderer);
         setOrderLines(orderLines);
         setShippingInfo(shippingInfo);
         this.state = state;
+    }
+
+    public Order() {
+
+    }
+
+    private void setNumber(OrderNo number) {
+        if (number == null) throw new IllegalArgumentException("no number");
+        this.number = number;
     }
 
     private void setOrderer(Orderer orderer) {

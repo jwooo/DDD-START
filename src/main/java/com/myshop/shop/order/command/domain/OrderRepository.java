@@ -1,7 +1,11 @@
 package com.myshop.shop.order.command.domain;
 
-public interface OrderRepository {
-    Order findByNumber(OrderNo orderNo);
+import org.springframework.data.repository.Repository;
+
+import java.util.Optional;
+
+public interface OrderRepository extends Repository<Order, OrderNo> {
+    Optional<Order> findById(OrderNo id);
     void save(Order order);
     void delete(Order order);
 }
