@@ -53,6 +53,13 @@ public class Member {
         this.blocked = false;
     }
 
+    public void changePassword(String oldPw, String newPw) {
+        if (!password.match(oldPw)) {
+            throw new IdPasswordNotMatchingException();
+        }
+        this.password = new Password(newPw);
+    }
+
     public boolean isBlocked() {
         return blocked;
     }
