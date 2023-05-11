@@ -32,6 +32,9 @@ public class Order {
     @EmbeddedId
     private OrderNo number;
 
+    @Version
+    private long version;
+
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "order_line", joinColumns = @JoinColumn(name = "order_number"))
     @OrderColumn(name = "line_idx")
@@ -119,6 +122,10 @@ public class Order {
         this.state = OrderState.CANCELED;
     }
 
+    public boolean matchVersion(long version) {
+        return this.version == version;
+    }
+
     public void completePayment() {
 
     }
@@ -133,12 +140,28 @@ public class Order {
         return this.number.equals(other.number);
     }
 
+    public void startShipping() {
+        verifyShippableState();
+        this.state = OrderState.SHIPPED;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((number == null) ? 0 : number.hashCode());
         return result;
+    }
+
+    private void verifyShippableState() {
+        verifyNotYetShipped();
+        verifyNotCanceled();
+    }
+
+    private void verifyNotCanceled() {
+        if (state == OrderState.CANCELED) {
+            throw new OrderAlreadyCanceledException();
+        }
     }
 
     private void verifyNotYetShipped() {

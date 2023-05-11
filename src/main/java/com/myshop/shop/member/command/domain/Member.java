@@ -3,7 +3,6 @@ package com.myshop.shop.member.command.domain;
 import com.myshop.shop.common.jpa.EmailSetConverter;
 import com.myshop.shop.common.model.Email;
 import com.myshop.shop.common.model.EmailSet;
-import com.myshop.shop.member.MemberId;
 
 import javax.persistence.*;
 import java.util.Set;

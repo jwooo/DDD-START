@@ -1,6 +1,6 @@
 package com.myshop.shop.order.command.application;
 
-import com.myshop.shop.member.MemberId;
+import com.myshop.shop.member.command.domain.MemberId;
 import com.myshop.shop.order.command.domain.ShippingInfo;
 
 import java.util.List;

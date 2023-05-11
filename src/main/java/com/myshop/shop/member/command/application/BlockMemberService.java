@@ -1,6 +1,6 @@
 package com.myshop.shop.member.command.application;
 
-import com.myshop.shop.member.MemberId;
+import com.myshop.shop.member.command.domain.MemberId;
 import com.myshop.shop.member.command.domain.Member;
 import com.myshop.shop.member.command.domain.MemberRepository;
 import org.springframework.stereotype.Service;

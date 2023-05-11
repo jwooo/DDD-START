@@ -1,6 +1,6 @@
 package com.myshop.shop.order.command.domain;
 
-import com.myshop.shop.member.MemberId;
+import com.myshop.shop.member.command.domain.MemberId;
 import lombok.Getter;
 
 import javax.persistence.*;

@@ -1,6 +1,5 @@
 package com.myshop.shop.member.command.domain;
 
-import com.myshop.shop.member.MemberId;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;

@@ -1,4 +1,4 @@
-package com.myshop.shop.member;
+package com.myshop.shop.member.command.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
