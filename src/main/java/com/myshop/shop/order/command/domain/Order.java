@@ -2,6 +2,7 @@ package com.myshop.shop.order.command.domain;
 
 import com.myshop.shop.common.jpa.MoneyConverter;
 import com.myshop.shop.common.model.Money;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.List;
 @Entity
 @Table(name = "purchase_order")
 @Access(AccessType.FIELD)
+@Getter
 public class Order {
 
     @EmbeddedId
