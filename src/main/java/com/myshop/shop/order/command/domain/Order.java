@@ -2,6 +2,7 @@ package com.myshop.shop.order.command.domain;
 
 import com.myshop.shop.common.jpa.MoneyConverter;
 import com.myshop.shop.common.model.Money;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,10 +28,14 @@ import java.util.List;
 @Entity
 @Table(name = "purchase_order")
 @Access(AccessType.FIELD)
+@Getter
 public class Order {
 
     @EmbeddedId
     private OrderNo number;
+
+    @Version
+    private long version;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "order_line", joinColumns = @JoinColumn(name = "order_number"))
@@ -119,6 +124,10 @@ public class Order {
         this.state = OrderState.CANCELED;
     }
 
+    public boolean matchVersion(long version) {
+        return this.version == version;
+    }
+
     public void completePayment() {
 
     }
@@ -133,12 +142,28 @@ public class Order {
         return this.number.equals(other.number);
     }
 
+    public void startShipping() {
+        verifyShippableState();
+        this.state = OrderState.SHIPPED;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((number == null) ? 0 : number.hashCode());
         return result;
+    }
+
+    private void verifyShippableState() {
+        verifyNotYetShipped();
+        verifyNotCanceled();
+    }
+
+    private void verifyNotCanceled() {
+        if (state == OrderState.CANCELED) {
+            throw new OrderAlreadyCanceledException();
+        }
     }
 
     private void verifyNotYetShipped() {
