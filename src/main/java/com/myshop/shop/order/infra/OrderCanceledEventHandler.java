@@ -3,6 +3,7 @@ package com.myshop.shop.order.infra;
 import com.myshop.shop.order.command.application.RefundService;
 import com.myshop.shop.order.command.domain.OrderCanceledEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +14,7 @@ public class OrderCanceledEventHandler {
         this.refundService = refundService;
     }
 
+    @Async
     @EventListener(OrderCanceledEvent.class)
     public void handle(OrderCanceledEvent event) {
         refundService.refund(event.getOrderNumber());
