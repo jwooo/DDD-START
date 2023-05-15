@@ -1,5 +1,6 @@
 package com.myshop.shop.order.command.domain;
 
+import com.myshop.shop.common.event.Events;
 import com.myshop.shop.common.jpa.MoneyConverter;
 import com.myshop.shop.common.model.Money;
 import lombok.Getter;
@@ -87,7 +88,9 @@ public class Order {
     }
 
     public void changeShippingInfo(ShippingInfo newShippingInfo) {
+        verifyNotYetShipped();
         setShippingInfo(newShippingInfo);
+        Events.raise(new ShippingInfoChangedEvent(number, newShippingInfo));
     }
 
     private void setShippingInfo(ShippingInfo newShippingInfo) {
@@ -110,15 +113,6 @@ public class Order {
         this.totalAmounts = new Money(sum);
     }
 
-    public void changeShipped() {
-
-    }
-
-    public void changeShippedInfo(ShippingInfo newShipping) {
-        verifyNotYetShipped();
-        setShippingInfo(newShipping);
-    }
-
     public void cancel() {
         verifyNotYetShipped();
         this.state = OrderState.CANCELED;
@@ -126,10 +120,6 @@ public class Order {
 
     public boolean matchVersion(long version) {
         return this.version == version;
-    }
-
-    public void completePayment() {
-
     }
 
     @Override
